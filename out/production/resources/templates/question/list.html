@@ -6,25 +6,51 @@
 
 <div layout:fragment="content" class="container my-3">
 
-    <h1>질문 리스트</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>제목</th>
-            <th>작성일시</th>
-        </tr>
-        </thead>
+    <h2 class="mb-4 fw-bold">질문 리스트</h2>
 
-        <tbody>
-        <tr th:each="question : ${list}">
-            <td>
-                <a th:href="@{|/question/${question.id}|}"
-                   th:text="${question.subject}">게시글 제목</a>
-            </td>
-            <td th:text="${question.created}">2026-10-07 10:00</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col" class="py-3 px-4">제목</th>
+                    <th scope="col" class="py-3 px-4 text-center"
+                        style="width: 200px;">
+                        작성일
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="question : ${list}">
+                    <td class="py-3 px-4">
+                        <a th:href="@{|/question/${question.id}|}"
+                           th:text="${question.subject}"
+                           class="text-decoration-none text-dark fw-semibold">
+                            게시글 제목
+                        </a>
+                    </td>
+
+                    <td class="py-3 px-4 text-center text-muted">
+                            <span th:text="${#temporals.format(question.created, 'yyyy-MM-dd | HH:mm')}">
+                                2026-10-07
+                            </span>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(list)}">
+                    <td colspan="2"
+                        class="text-center text-muted py-5">
+                        등록된 질문이 없습니다.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a th:href = "@{/question/create}" class = "btn btn-primary">질문 등록</a>
+
 
 </div>
 </html>

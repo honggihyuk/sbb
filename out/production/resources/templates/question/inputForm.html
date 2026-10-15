@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+
+<div layout:fragment="content" class="container my-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="mb-0">질문 등록</h4>
+                </div>
+
+                <div class="card-body p-4">
+                    <form th:action="@{/question/create}" method="post">
+
+                        <!-- 제목 -->
+                        <div class="mb-4">
+                            <label for="subject" class="form-label fw-bold">
+                                제목
+                            </label>
+                            <input type="text"
+                                   id="subject"
+                                   name="subject"
+                                   class="form-control"
+                                   placeholder="제목을 입력하세요."
+                                   required>
+                        </div>
+
+                        <!-- 내용 -->
+                        <div class="mb-4">
+                            <label for="content" class="form-label fw-bold">
+                                내용
+                            </label>
+                            <textarea id="content"
+                                      name="content"
+                                      class="form-control"
+                                      rows="8"
+                                      placeholder="내용을 입력하세요."
+                                      required></textarea>
+                        </div>
+
+                        <!-- 저장 버튼 -->
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary px-4">
+                                저장하기
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</html>
