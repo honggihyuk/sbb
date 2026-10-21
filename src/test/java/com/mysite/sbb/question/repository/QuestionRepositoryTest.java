@@ -1,6 +1,8 @@
 package com.mysite.sbb.question.repository;
 
+import com.mysite.sbb.question.dto.QuestionDto;
 import com.mysite.sbb.question.entity.Question;
+import com.mysite.sbb.question.service.QuestionService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ class QuestionRepositoryTest {
 
     @Autowired // Dependency Injection
     private QuestionRepository questionRepository;
+
+    @Autowired
+    private QuestionService questionService;
 
 
     @Test
@@ -104,5 +109,15 @@ class QuestionRepositoryTest {
         assertEquals(1, questionRepository.count());
     }
 
+    @Test
+    void testLargeData() {
+        for (int i = 1; i <= 300; i++) {
+            QuestionDto questionDto = QuestionDto.builder()
+                    .subject("테스트 데이터 입니다. [" + i +"]")
+                    .content("내용 입니다.[" + i +"]")
+                    .build();
+            questionService.createQuestion(questionDto);
+        }
+    }
 
 }

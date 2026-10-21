@@ -23,7 +23,7 @@
                 </thead>
 
                 <tbody>
-                <tr th:each="question : ${list}">
+                <tr th:each="question : ${paging}">
                     <td class="py-3 px-4">
                         <a th:href="@{|/question/${question.id}|}"
                            th:text="${question.subject}"
@@ -39,7 +39,7 @@
                     </td>
                 </tr>
 
-                <tr th:if="${#lists.isEmpty(list)}">
+                <tr th:if="${#lists.isEmpty(paging)}">
                     <td colspan="2"
                         class="text-center text-muted py-5">
                         등록된 질문이 없습니다.
