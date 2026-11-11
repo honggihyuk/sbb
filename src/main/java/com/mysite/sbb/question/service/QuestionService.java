@@ -23,10 +23,8 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
 
     public Page<Question> getList(int page) {
-//        Pageable pageable = PageRequest.of(page, 10, Sort.Direction.DESC, "created");
         Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Order.desc("created")));
         Page<Question> paging = questionRepository.findAll(pageable); //page 잡아오기
-//        List<Question> questionList = questionRepository.findAll();
         return paging;
     }
 

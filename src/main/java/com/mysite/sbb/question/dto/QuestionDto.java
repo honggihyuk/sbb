@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 @Builder
 public class QuestionDto {
+    //validation check!
+
     @NotEmpty(message = "제목은 필수 항목입니다.")
     @Size(max = 150, message = "제목은 150자 이내로 입력하세요.")
     private String subject;

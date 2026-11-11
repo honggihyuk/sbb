@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<th:block layout:fragment="css">
+    <style>
+        .fieldError { color: #b02a37; }
+    </style>
+</th:block>
+
+<div layout:fragment="content" class="container my-3">
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">도서 등록</h4>
+        </div>
+
+        <div class="card-body p-4">
+            <!-- th:action 을 생략하면 "지금 주소"로 POST 된다
+                 /book/create 화면 → POST /book/create
+                 /book/modify/3 화면 → POST /book/modify/3 -->
+            <form th:object="${bookDto}" method="post">
+
+                <div class="mb-3">
+                    <label for="title" class="form-label fw-bold">도서 제목</label>
+                    <input type="text" th:field="*{title}" class="form-control">
+                    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError"></p>
+                </div>
+
+                <div class="mb-3">
+                    <label for="author" class="form-label fw-bold">저자</label>
+                    <input type="text" th:field="*{author}" class="form-control">
+                    <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="fieldError"></p>
+                </div>
+
+                <div class="mb-3">
+                    <label for="content" class="form-label fw-bold">소개</label>
+                    <textarea th:field="*{content}" class="form-control" rows="6"></textarea>
+                </div>
+
+                <div class="text-end">
+                    <a th:href="@{/book/list}" class="btn btn-secondary">목록</a>
+                    <button type="submit" class="btn btn-primary">저장하기</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+</html>

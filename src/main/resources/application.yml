@@ -46,3 +46,12 @@ spring:
   servlet:
     encoding:
       charset: UTF-8        # 인코딩 설정
+
+  ####################################
+  # Security User 설정
+  ####################################
+  security:
+    user:
+      name: test
+      password: 1111
+      roles: USER
