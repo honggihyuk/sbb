@@ -1,6 +1,5 @@
 package com.mysite.sbb.book.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,21 +15,27 @@ import java.util.List;
 @Builder
 public class Book {
 
-    @Id     // 기본키 설정
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 100, nullable = false)
-    private String title; // 도서 제목
+    private String title;   //도서 제목
 
-    @Column
-    private String author; //저자
+    @Column(length = 50, nullable = false)
+    private String author;  //저자
 
     @Column(columnDefinition = "TEXT")
-    private String content; // 감상평
+    private String content;  //소개
 
-    private LocalDateTime created; // 생성 날짜
+    private Double rating;
+
+    private LocalDateTime created;  //등록일
+
+    @Builder.Default
+    private Integer viewCount = 0;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
     private List<Review> reviewList;
+
 }

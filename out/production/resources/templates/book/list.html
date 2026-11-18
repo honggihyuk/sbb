@@ -12,6 +12,13 @@
         <div class="col-6">
             <a th:href="@{/book/create}" class="btn btn-primary">도서 등록</a>
         </div>
+        <div class="col-6">
+            <div class="input-group">
+                <input type="text" id="search_kw" class="form-control"
+                       th:value="${kw}" placeholder="제목 또는 저자 검색">
+                <button class="btn btn-outline-secondary" type="button" id="btn_search">검색</button>
+            </div>
+        </div>
     </div>
 
     <table class="table table-hover align-middle">
@@ -20,7 +27,8 @@
             <th style="width: 80px;">번호</th>
             <th>제목</th>
             <th>저자</th>
-            <th>작성일시</th>
+            <th>평점</th>
+            <th>등록일</th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +42,7 @@
                       class="badge bg-primary rounded-pill"></span>
             </td>
             <td th:text="${book.author}"></td>
+            <td th:text="${book.rating}"></td>
             <td th:text="${#temporals.format(book.created, 'yyyy-MM-dd')}"></td>
         </tr>
         <tr th:if="${#lists.isEmpty(paging)}">

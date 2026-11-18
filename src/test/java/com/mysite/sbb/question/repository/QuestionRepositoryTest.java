@@ -44,7 +44,6 @@ class QuestionRepositoryTest {
         Question q2 = Question.builder()
                 .subject("스프링 부트도 어려운가요?")
                 .content("스프링은 왜 어렵다고 하는거죠?")
-                .created(LocalDateTime.now())
                 .build();
         Question saved2 = questionRepository.save(q2);
         assertEquals(2, saved2.getId());

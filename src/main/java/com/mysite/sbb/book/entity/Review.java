@@ -14,22 +14,18 @@ import java.time.LocalDateTime;
 @Builder
 public class Review {
 
-    @Id     // 기본키 설정
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = false)
-    private String title; // 도서 제목
-
-    @Column
-    private String author; //저자
-
     @Column(columnDefinition = "TEXT")
-    private String content; // 도서 내용
+    private String content;  //리뷰 내용
 
-    private LocalDateTime created; // 생성 날짜
+    private Integer rating;  // 평점 1~5점
+
+    private LocalDateTime created;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Book book;
+    private Book book;  // FK: book_id
 
 }

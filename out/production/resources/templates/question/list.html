@@ -16,6 +16,7 @@
                 <tr>
                     <th scope="col" class="py-3 px-4">번호</th>
                     <th scope="col" class="py-3 px-4">제목</th>
+                    <th scope="col" class="py-3 px-4">작성자</th>
                     <th scope="col" class="py-3 px-4 text-center"
                         style="width: 200px;">
                         작성일
@@ -37,6 +38,7 @@
                               th:text="${#lists.size(question.answerList)}"
                               class="bg-primary text-white px-2 py-1 rounded-pill small"></span>
                     </td>
+                    <td>작성자</td>
 
                     <td class="py-3 px-4 text-center text-muted">
                             <span th:text="${#temporals.format(question.created, 'yyyy-MM-dd | HH:mm')}">

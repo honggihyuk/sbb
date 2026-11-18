@@ -1,19 +1,17 @@
 package com.mysite.sbb.book.service;
 
-import com.mysite.sbb.book.dto.ReviewDto;
 import com.mysite.sbb.book.entity.Book;
+import com.mysite.sbb.book.dto.ReviewDto;
 import com.mysite.sbb.book.entity.Review;
 import com.mysite.sbb.book.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
@@ -22,6 +20,7 @@ public class ReviewService {
         Review review = Review.builder()
                 .book(book)
                 .content(reviewDto.getContent())
+                .rating(reviewDto.getRating())
                 .created(LocalDateTime.now())
                 .build();
         reviewRepository.save(review);

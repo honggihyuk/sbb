@@ -1,6 +1,8 @@
 package com.mysite.sbb.question.entity;
 
 import com.mysite.sbb.answer.entity.Answer;
+import com.mysite.sbb.audit.BaseEntity;
+import com.mysite.sbb.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 
-public class Question {
+public class Question extends BaseEntity {
 
     @Id     // 기본키 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +30,13 @@ public class Question {
     @Column(columnDefinition = "TEXT")
     private String content; // 질문 내용
 
-    private LocalDateTime created; // 생성 날짜
+//    private LocalDateTime created; // 생성 날짜
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answerList;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member author;
 
 }

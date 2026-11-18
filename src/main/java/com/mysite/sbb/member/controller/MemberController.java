@@ -3,10 +3,17 @@ package com.mysite.sbb.member.controller;
 
 import com.mysite.sbb.member.dto.MemberDto;
 import com.mysite.sbb.member.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +27,27 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @GetMapping("/login")
+    public String login() {
+        return "member/login";
+    }
+
+    @GetMapping("/login/error")
+    public String loginerror(Model model) {
+        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
+        return "member/login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        log.info("==================== LOGOUT =====================");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+        return "redirect:/";
+    }
+
     @GetMapping("/signup")
     public String signup(MemberDto memberDto) {
         return "member/signup";
@@ -27,7 +55,8 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String signup(@Valid MemberDto memberDto,
-                         BindingResult bindingResult) {
+                         BindingResult bindingResult,
+                         Model model) {
         log.info("=======> memberDto = {}", memberDto);
         if(bindingResult.hasErrors()) {
             return "member/signup";
@@ -38,7 +67,17 @@ public class MemberController {
             return "member/signup";
         }
 
-        memberService.createMember(memberDto);
+        try {
+            memberService.createMember(memberDto);
+        } catch (DataIntegrityViolationException e){
+            e.printStackTrace();
+            model.addAttribute("errorMsg", "이미 등록된 사용자 입니다.");
+            return "member/signup";
+        } catch (Exception e) {
+            e.printStackTrace();
+            bindingResult.reject("errorMsg", e.getMessage());
+            return "member/signup";
+        }
 
         return "redirect:/";
 

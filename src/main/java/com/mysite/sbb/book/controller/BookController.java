@@ -24,12 +24,19 @@ public class BookController {
     // 목록: /book/list?page=0&kw=자바
     @GetMapping("/list")
     public String list(Model model,
-                       @RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "kw", defaultValue = "") String kw) {
-        Page<Book> paging = bookService.getList(page, kw);
+                       @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Book> paging = bookService.getList(page);
         model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
         return "book/list";
+    }
+
+    // 상세: /book/3
+    @GetMapping("/{id}")
+    public String detail(@PathVariable("id") Long id, ReviewDto reviewDto, Model model) {
+        Book book = bookService.getBook(id);
+        bookService.increaseViewCount(book);
+        model.addAttribute("book", book);
+        return "book/detail";
     }
 
     // 등록 폼
@@ -46,11 +53,6 @@ public class BookController {
         }
         bookService.createBook(bookDto);
         return "redirect:/book/list";
-    }
-
-    @GetMapping("/{id}")
-    public String detail(@PathVariable Long id) {
-        return "book/detail";
     }
 
     // 수정 폼 (기존 값 채워서 보여주기)
