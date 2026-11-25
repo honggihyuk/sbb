@@ -1,9 +1,11 @@
 package com.mysite.sbb.question.service;
 
+import com.mysite.sbb.member.entity.Member;
 import com.mysite.sbb.question.dto.QuestionDto;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,12 +45,19 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    public void createQuestion(QuestionDto questionDto) {
+    public void createQuestion(QuestionDto questionDto, Member author) {
         Question question = Question.builder()
                 .subject(questionDto.getSubject())
                 .content(questionDto.getContent())
+                .author(author)
                 .build();
 
         questionRepository.save(question);
+    }
+
+    public void modifyQuestion(Question question, @Valid QuestionDto questionDto) {
+            question.setSubject(questionDto.getSubject());
+            question.setContent(questionDto.getContent());
+            questionRepository.save(question);
     }
 }

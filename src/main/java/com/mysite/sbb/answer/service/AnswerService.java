@@ -3,6 +3,7 @@ package com.mysite.sbb.answer.service;
 import com.mysite.sbb.answer.dto.AnswerDto;
 import com.mysite.sbb.answer.entity.Answer;
 import com.mysite.sbb.answer.repository.AnswerRepository;
+import com.mysite.sbb.member.entity.Member;
 import com.mysite.sbb.question.entity.Question;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +18,12 @@ public class AnswerService {
 
     private final AnswerRepository answerRepository;
 
-    public void createAnswer(Question question, AnswerDto answerDto) {
+    public void createAnswer(Question question, AnswerDto answerDto, Member author) {
 
         Answer answer = Answer.builder()
                 .question(question)
                 .content(answerDto.getContent())
+                .author(author)
                 .build();
 
         Answer saved = answerRepository.save(answer);

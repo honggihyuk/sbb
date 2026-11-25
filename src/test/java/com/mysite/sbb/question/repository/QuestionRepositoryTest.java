@@ -108,15 +108,15 @@ class QuestionRepositoryTest {
         assertEquals(1, questionRepository.count());
     }
 
-    @Test
-    void testLargeData() {
-        for (int i = 1; i <= 300; i++) {
-            QuestionDto questionDto = QuestionDto.builder()
-                    .subject("테스트 데이터 입니다. [" + i +"]")
-                    .content("내용 입니다.[" + i +"]")
-                    .build();
-            questionService.createQuestion(questionDto);
-        }
-    }
+//    @Test
+//    void testLargeData() {
+//        for (int i = 1; i <= 300; i++) {
+//            QuestionDto questionDto = QuestionDto.builder()
+//                    .subject("테스트 데이터 입니다. [" + i +"]")
+//                    .content("내용 입니다.[" + i +"]")
+//                    .build();
+//            questionService.createQuestion(questionDto);
+//        }
+//    }
 
 }
